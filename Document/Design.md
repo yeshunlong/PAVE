@@ -19,6 +19,7 @@
   - Mysql：数据库
 
 项目结构如下：
+```
 WorkflowManager （解决方案）
 │
 ├── WorkflowManager.UI （WPF 项目，界面层）
@@ -50,6 +51,7 @@ WorkflowManager （解决方案）
 │   ├── DatabaseContext.cs （Entity Framework 数据上下文）
 │
 └── db.sql （数据库脚本）
+```
 
 现在，你需要帮我根据src/db.sql中的数据库表和当前的项目设计，帮我在项目目录中创建对应的文件夹和文件。
 
