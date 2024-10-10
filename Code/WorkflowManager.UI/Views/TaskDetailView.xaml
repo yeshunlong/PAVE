@@ -1,0 +1,19 @@
+﻿<Window x:Class="WorkflowManager.UI.Views.TaskDetailView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Details" Height="300" Width="400">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="任务名称" FontWeight="Bold" />
+            <TextBlock Text="{Binding Task.Title}" />
+
+            <TextBlock Text="任务描述" FontWeight="Bold" />
+            <TextBlock Text="{Binding Task.Description}" />
+
+            <TextBlock Text="当前状态" FontWeight="Bold" />
+            <ComboBox ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Task.Status}" />
+
+            <Button Content="保存" Command="{Binding SaveCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

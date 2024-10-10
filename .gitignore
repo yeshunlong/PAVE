@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.suo
+*.orig
+.sonarqube/
+*.bat
+*.v11
+*.v12
+*.suo
+*.user
