@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using WorkflowManager.Core.Interfaces;
 using WorkflowManager.Core.Models;
 
@@ -12,6 +13,7 @@ namespace WorkflowManager.UI.ViewModels
         public ObservableCollection<Task> Tasks { get; set; }
         public ObservableCollection<Employee> Employees { get; set; }
         public Employee SelectedEmployee { get; set; }
+        public ObservableCollection<Task> UnAssignedTasks { get; set; }
 
         public MainViewModel(ITaskService taskService, IEmployeeService employeeService)
         {
@@ -21,6 +23,26 @@ namespace WorkflowManager.UI.ViewModels
             // 初始化数据
             Tasks = new ObservableCollection<Task>(_taskService.GetAllTasks());
             Employees = new ObservableCollection<Employee>(_employeeService.GetAllEmployees());
+            UnAssignedTasks = new ObservableCollection<Task>(_taskService.GetUnAssignedTasks());
+        }
+
+        internal void UpdateTasks()
+        {
+            Tasks.Clear();
+            foreach (var task in _taskService.GetAllTasks())
+            {
+                Tasks.Add(task);
+            }
+            Employees.Clear();
+            foreach (var employee in _employeeService.GetAllEmployees())
+            {
+                Employees.Add(employee);
+            }
+            UnAssignedTasks.Clear();
+            foreach (var task in _taskService.GetUnAssignedTasks())
+            {
+                UnAssignedTasks.Add(task);
+            }
         }
     }
 }

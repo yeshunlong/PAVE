@@ -10,5 +10,7 @@ namespace WorkflowManager.Core.Interfaces
         void CreateTask(Task task);
         void UpdateTask(Task task);
         void DeleteTask(int id);
+        IEnumerable<Task> GetUnAssignedTasks();
+        void UpdateTask(Task task, string status, int employeeId);
     }
 }

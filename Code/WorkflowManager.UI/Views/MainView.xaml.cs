@@ -33,10 +33,15 @@ namespace WorkflowManager.UI.Views
                 if (selectedTask != null)
                 {
                     TaskDetailView detailView = new TaskDetailView(selectedTask);
+                    detailView.UpdateMainView += (status) =>
+                    {
+                        // 更新主视图
+                        var viewModel = this.DataContext as MainViewModel;
+                        viewModel?.UpdateTasks();
+                    };
                     detailView.ShowDialog(); // 以模态对话框形式打开
                 }
             }
         }
-
     }
 }

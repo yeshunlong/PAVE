@@ -1,19 +1,47 @@
 ﻿<UserControl x:Class="WorkflowManager.UI.UserControls.TaskCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Height="150" Width="300">
-    <Border BorderBrush="Gray" BorderThickness="1" Padding="10">
+             Height="Auto" Width="450">
+    <UserControl.Resources>
+        <!-- 动画资源 -->
+        <Storyboard x:Key="MouseEnterStoryboard">
+            <DoubleAnimation 
+                Storyboard.TargetProperty="Opacity" 
+                To="0.9" Duration="0:0:0.2"/>
+            <ColorAnimation 
+                Storyboard.TargetName="Border" 
+                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                To="#E8F0FE" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="MouseLeaveStoryboard">
+            <DoubleAnimation 
+                Storyboard.TargetProperty="Opacity" 
+                To="1.0" Duration="0:0:0.2"/>
+            <ColorAnimation 
+                Storyboard.TargetName="Border" 
+                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                To="White" Duration="0:0:0.2"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Border x:Name="Border" Background="White" BorderBrush="#DDDDDD" BorderThickness="1" Padding="15">
         <StackPanel>
-            <TextBlock Text="{Binding Title}" FontWeight="Bold" />
-            <TextBlock Text="{Binding Description}" />
-            <TextBlock Text="截止时间: " FontWeight="Bold" />
-            <TextBlock Text="{Binding Deadline}" />
-            <TextBlock Text="紧急度: " FontWeight="Bold" />
-            <TextBlock Text="{Binding Urgency}" />
-            <TextBlock Text="类型: " FontWeight="Bold" />
-            <TextBlock Text="{Binding Type}" />
-            <TextBlock Text="状态: " FontWeight="Bold" />
-            <TextBlock Text="{Binding Status}" />
+            <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="#333333" Margin="0,0,0,5"/>
+
+            <TextBlock Text="Deadline: " FontWeight="Bold" Foreground="#0078D7" />
+            <TextBlock Text="{Binding Deadline}" Foreground="#444444" />
+
+            <TextBlock Text="Status: " FontWeight="Bold" Foreground="#0078D7" />
+            <TextBlock Text="{Binding Status}" Foreground="#444444" />
         </StackPanel>
+
+        <Border.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard Storyboard="{StaticResource MouseEnterStoryboard}"/>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard Storyboard="{StaticResource MouseLeaveStoryboard}"/>
+            </EventTrigger>
+        </Border.Triggers>
     </Border>
 </UserControl>

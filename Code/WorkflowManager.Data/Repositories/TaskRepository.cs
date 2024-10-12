@@ -47,5 +47,23 @@ namespace WorkflowManager.Data.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public IEnumerable<Task> GetUnAssignedTasks()
+        {
+            List<Task> tasks = _context.Tasks.Include(t => t.Employee).ToList();
+            return tasks.Where(t => t.Employee == null);
+        }
+
+        public void UpdateTask(Task task, string status, int employeeId)
+        {
+            // 更新任务状态
+            task.Status = Enum.Parse<TaskStatus>(status);
+            // 更新任务负责人
+            task.AssignedTo = employeeId;
+            // 更新导航属性
+            task.Employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+            _context.Tasks.Update(task);
+            _context.SaveChanges();
+        }
     }
 }

@@ -4,51 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkflowManager.UI.UserControls"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Workflow Manager" Height="600" Width="900">
+        Title="Workflow Manager"
+        SizeToContent="WidthAndHeight" 
+        Background="#F9F9F9"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        WindowStyle="None">
 
     <Grid>
-        <!-- 列表显示所有员工及其任务 -->
-        <ItemsControl ItemsSource="{Binding Employees}" HorizontalAlignment="Stretch">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <!-- 每个员工对应一列 -->
-                    <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5">
-                        <StackPanel>
-                            <!-- 显示员工姓名 -->
-                            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <!-- 员工和任务区域 -->
+                <RowDefinition Height="Auto"/>
+                <!-- 未分配任务区域 -->
+            </Grid.RowDefinitions>
 
-                            <!-- 每个员工的任务列表 -->
-                            <ItemsControl ItemsSource="{Binding Tasks}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl Content="{Binding}">
-                                            <ContentControl.ContentTemplate>
-                                                <DataTemplate>
-                                                    <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown" />
-                                                </DataTemplate>
-                                            </ContentControl.ContentTemplate>
-                                        </ContentControl>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <!-- 纵向排列任务卡片 -->
-                                        <StackPanel Orientation="Vertical"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            <!-- 员工和任务展示 -->
+            <ItemsControl ItemsSource="{Binding Employees}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- 每个员工对应一列 -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" Margin="10" Background="White">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource EmployeeNameTextStyle}"/>
+                                <ItemsControl ItemsSource="{Binding Tasks}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding}">
+                                                <ContentControl.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown">
+                                                        </local:TaskCard>
+                                                    </DataTemplate>
+                                                </ContentControl.ContentTemplate>
+                                            </ContentControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <!-- 使用 WrapPanel 来展示多个员工列 -->
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+            <!-- 未分配任务展示 -->
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding UnAssignedTasks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}">
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate>
+                                    <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </Window>

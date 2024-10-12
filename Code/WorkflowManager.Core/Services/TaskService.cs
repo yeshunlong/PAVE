@@ -37,5 +37,15 @@ namespace WorkflowManager.Core.Services
         {
             _taskRepository.DeleteTask(id);
         }
+
+        public IEnumerable<Task> GetUnAssignedTasks()
+        {
+            return _taskRepository.GetUnAssignedTasks();
+        }
+
+        public void UpdateTask(Task task, string status, int employeeId)
+        {
+            _taskRepository.UpdateTask(task, status, employeeId);
+        }
     }
 }
