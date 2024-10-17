@@ -8,6 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Alice.png" />
+    <None Remove="Images\Alice_transparent.png" />
+    <None Remove="Images\Bob.png" />
+    <None Remove="Images\Bob_transparent.png" />
+    <None Remove="Images\Charlie.png" />
+    <None Remove="Images\Charlie_transparent.png" />
+    <None Remove="Images\David.png" />
+    <None Remove="Images\David_transparent.png" />
+    <None Remove="Images\Doing.png" />
+    <None Remove="Images\Eden.png" />
+    <None Remove="Images\Eden_transparent.png" />
+    <None Remove="Images\Pending.png" />
+    <None Remove="Images\UnAssigned.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
 
@@ -19,6 +35,22 @@
   <ItemGroup>
     <ProjectReference Include="..\WorkflowManager.Core\WorkflowManager.Core.csproj" />
     <ProjectReference Include="..\WorkflowManager.Data\WorkflowManager.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Alice.png" />
+    <Resource Include="Images\Alice_transparent.png" />
+    <Resource Include="Images\Bob.png" />
+    <Resource Include="Images\Bob_transparent.png" />
+    <Resource Include="Images\Charlie.png" />
+    <Resource Include="Images\Charlie_transparent.png" />
+    <Resource Include="Images\David.png" />
+    <Resource Include="Images\David_transparent.png" />
+    <Resource Include="Images\Doing.png" />
+    <Resource Include="Images\Eden.png" />
+    <Resource Include="Images\Eden_transparent.png" />
+    <Resource Include="Images\Pending.png" />
+    <Resource Include="Images\UnAssigned.png" />
   </ItemGroup>
 
 </Project>

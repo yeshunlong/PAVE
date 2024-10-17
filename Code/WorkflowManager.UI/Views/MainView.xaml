@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkflowManager.UI.UserControls"
+        xmlns:local1="clr-namespace:WorkflowManager.UI.Converters"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Workflow Manager"
@@ -13,72 +14,176 @@
         AllowsTransparency="True"
         WindowStyle="None">
 
+    <Window.Resources>
+        <local1:IndexToMarginConverter x:Key="IndexToMarginConverter"/>
+        <local1:WorkloadToEndPointConverter x:Key="WorkloadToEndPointConverter"/>
+        <local1:DaysToTopConverter x:Key="DaysToTopConverter"/>
+    </Window.Resources>
+
     <Grid>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <!-- 员工和任务区域 -->
-                <RowDefinition Height="Auto"/>
-                <!-- 未分配任务区域 -->
-            </Grid.RowDefinitions>
+        <!-- 定义行和列 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- 员工和任务展示 -->
-            <ItemsControl ItemsSource="{Binding Employees}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <!-- 每个员工对应一列 -->
-                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" Margin="10" Background="White">
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource EmployeeNameTextStyle}"/>
-                                <ItemsControl ItemsSource="{Binding Tasks}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ContentControl Content="{Binding}">
-                                                <ContentControl.ContentTemplate>
-                                                    <DataTemplate>
-                                                        <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown">
-                                                        </local:TaskCard>
-                                                    </DataTemplate>
-                                                </ContentControl.ContentTemplate>
-                                            </ContentControl>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Vertical"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
+        <!-- 设置横轴表头 -->
+        <TextBlock Text="Employees" Grid.Row="0" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0"/>
+        <TextBlock Text="UnAssigned Tasks" Grid.Row="0" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,20"/>
+        <ListView ItemsSource="{Binding Employees}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="10" BorderThickness="0">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding Employees.Count}"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <!-- 背景矩形，模拟进度条的渐变效果，并带有圆角 -->
+                        <Rectangle HorizontalAlignment="Left" 
+                        VerticalAlignment="Stretch"
+                        RadiusX="10" 
+                        RadiusY="10"
+                        Width="525">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0">
+                                    <LinearGradientBrush.EndPoint>
+                                        <MultiBinding Converter="{StaticResource WorkloadToEndPointConverter}">
+                                            <Binding Path="Workload"/>
+                                        </MultiBinding>
+                                    </LinearGradientBrush.EndPoint>
+                                    <!-- 渐变的起点颜色，映射到StatusColor属性 -->
+                                    <GradientStop Color="{Binding StatusColor}" Offset="0"/>
+                                    <!-- 渐变的终点颜色，表示过渡到白色 -->
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <!-- 原有的StackPanel内容 -->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Name}" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center" 
+                               Style="{StaticResource EmployeeNameTextStyle}"/>
+                                <TextBlock Text="{Binding Status}" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center" 
+                               Style="{StaticResource EmployeeStatusTextStyle}"/>
                             </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                            <Image Source="{Binding Image}" 
+                               Width="Auto" 
+                               Height="75" 
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-            <!-- 未分配任务展示 -->
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding UnAssignedTasks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}">
-                            <ContentControl.ContentTemplate>
-                                <DataTemplate>
-                                    <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown"/>
-                                </DataTemplate>
-                            </ContentControl.ContentTemplate>
-                        </ContentControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </Grid>
+        <!-- 使用ListView绑定Employees集合 -->
+        <ListView ItemsSource="{Binding Employees}" Grid.Row="1" Grid.Column="1" BorderThickness="0" >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid IsItemsHost="True" ShowGridLines="False">
+                        <!-- 根据需要定义行和列 -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <!-- 设置ItemContainerStyle来绑定Grid.Row和Grid.Column -->
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Grid.Column" Value="{Binding EmployeeId}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- 嵌套ListView绑定Tasks集合 -->
+                    <ListView ItemsSource="{Binding Tasks}" BorderThickness="0">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid IsItemsHost="True">
+                                    <!-- 根据需要定义行和列 -->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <!-- 设置ItemContainerStyle来绑定Grid.Row和Grid.Column -->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Grid.Row" Value="{Binding RemainingDays}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}">
+                                    <ContentControl.ContentTemplate>
+                                        <DataTemplate>
+                                            <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown" MouseWheel="TaskCard_MouseWheel"/>
+                                        </DataTemplate>
+                                    </ContentControl.ContentTemplate>
+                                </ContentControl>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        <!-- 未分配任务展示 -->
+        <ListView Grid.Row="2" ItemsSource="{Binding UnAssignedTasks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate>
+                                <local:TaskCard Task="{Binding}" MouseLeftButtonDown="TaskCard_MouseLeftButtonDown"/>
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
     </Grid>
 </Window>

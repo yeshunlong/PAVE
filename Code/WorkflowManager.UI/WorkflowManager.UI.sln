@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Core", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Data", "..\WorkflowManager.Data\WorkflowManager.Data.csproj", "{C097258C-E528-40DB-8C9C-2B92E2BFE03A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManager.Demo", "..\WorkflowManager.Demo\WorkflowManager.Demo.csproj", "{8C5745F9-4653-4B98-8C6C-2E4D5E60CB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C097258C-E528-40DB-8C9C-2B92E2BFE03A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C097258C-E528-40DB-8C9C-2B92E2BFE03A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C097258C-E528-40DB-8C9C-2B92E2BFE03A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C5745F9-4653-4B98-8C6C-2E4D5E60CB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5745F9-4653-4B98-8C6C-2E4D5E60CB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5745F9-4653-4B98-8C6C-2E4D5E60CB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5745F9-4653-4B98-8C6C-2E4D5E60CB87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

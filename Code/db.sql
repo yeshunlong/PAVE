@@ -31,33 +31,36 @@ INSERT INTO Employees (Name, Position) VALUES ('Bob', 'Project Manager');
 INSERT INTO Employees (Name, Position) VALUES ('Charlie', 'Designer');
 INSERT INTO Employees (Name, Position) VALUES ('David', 'QA Engineer');
 
--- 插入测试任务数据
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Design UI for new feature', 'Create a new UI for the upcoming feature.', '2024-10-30 12:00:00', 3, 'Normal', 'Pending', NULL);
+-- 生成30条随机的任务记录插入到Tasks表中
+INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) VALUES
+('Fix UI glitch in dashboard', 'Resolve the issue causing the dashboard to misalign on certain resolutions.', '2024-10-20 10:00:00', 3, 'Defect', 'Pending', 1), -- Assigned to Eden
+('Prepare user onboarding materials', 'Create content and slides for the user onboarding session.', '2024-10-21 09:00:00', 2, 'Normal', 'Pending', NULL), 
+('Enhance search filtering', 'Add more filter options to the existing search functionality.', '2024-10-22 13:00:00', 4, 'Paid', 'InProgress', 2), -- Assigned to Alice
+('Test payment module regression', 'Verify if the recent updates caused any regression in the payment module.', '2024-10-20 15:30:00', 5, 'Defect', 'Testing', 5), -- Assigned to David
+('Refactor code for performance', 'Optimize the codebase to improve system performance.', '2024-10-23 11:00:00', 3, 'Normal', 'Pending', 3), -- Assigned to Bob
+('Conduct user acceptance testing', 'Perform UAT for the new feature release.', '2024-10-24 17:00:00', 2, 'Paid', 'Review', 4), -- Assigned to Charlie
+('Create wireframes for new module', 'Design wireframes for the new system module.', '2024-10-25 10:30:00', 3, 'Normal', 'Pending', NULL),
+('Update deployment scripts', 'Revise deployment scripts to accommodate recent changes.', '2024-10-21 12:00:00', 4, 'Defect', 'Pending', 1), -- Assigned to Eden
+('Fix broken links on website', 'Identify and correct all broken links across the website.', '2024-10-22 08:00:00', 2, 'Normal', 'InProgress', 2), -- Assigned to Alice
+('Improve API documentation', 'Add examples and improve clarity in the API documentation.', '2024-10-23 14:00:00', 3, 'Paid', 'Pending', 3), -- Assigned to Bob
+('Set up monitoring tools', 'Configure monitoring tools to track server health.', '2024-10-24 09:30:00', 5, 'Normal', 'Review', 5), -- Assigned to David
+('Test email notification system', 'Ensure that email notifications are working as intended.', '2024-10-25 13:45:00', 4, 'Normal', 'Testing', 4), -- Assigned to Charlie
+('Add accessibility features', 'Implement additional accessibility options for the platform.', '2024-10-20 11:00:00', 3, 'Normal', 'Pending', NULL),
+('Resolve checkout process issues', 'Fix bugs affecting the checkout process.', '2024-10-21 18:00:00', 5, 'Defect', 'InProgress', 1), -- Assigned to Eden
+('Upgrade server hardware', 'Plan and execute the server hardware upgrade.', '2024-10-22 16:30:00', 2, 'Paid', 'Pending', 5), -- Assigned to David
+('Prepare presentation for stakeholders', 'Create slides and content for the upcoming stakeholder meeting.', '2024-10-23 10:00:00', 3, 'Normal', 'Review', 3), -- Assigned to Bob
+('Optimize frontend performance', 'Reduce page load times by optimizing frontend code.', '2024-10-24 14:30:00', 4, 'Normal', 'InProgress', 2), -- Assigned to Alice
+('Perform security audit', 'Conduct a security audit of the database and API endpoints.', '2024-10-25 11:15:00', 5, 'Defect', 'Testing', 4), -- Assigned to Charlie
+('Document new API endpoints', 'Create documentation for the newly developed API endpoints.', '2024-10-20 13:00:00', 2, 'Normal', 'Pending', NULL),
+('Fix issue with file uploads', 'Resolve the issue where certain file formats cannot be uploaded.', '2024-10-21 14:30:00', 4, 'Defect', 'InProgress', 2), -- Assigned to Alice
+('Implement logging for audit trail', 'Add logging functionality to track user actions.', '2024-10-22 12:30:00', 3, 'Paid', 'Pending', 1), -- Assigned to Eden
+('Upgrade software dependencies', 'Update software dependencies to the latest versions.', '2024-10-23 16:00:00', 2, 'Normal', 'Pending', 3), -- Assigned to Bob
+('Review and merge pull requests', 'Review pending pull requests and merge them into the main branch.', '2024-10-24 10:45:00', 4, 'Normal', 'Review', 5), -- Assigned to David
+('Optimize image loading times', 'Improve the process for loading images on the website.', '2024-10-25 15:00:00', 3, 'Defect', 'Testing', 4), -- Assigned to Charlie
+('Configure caching', 'Set up caching to improve website performance.', '2024-10-20 17:30:00', 5, 'Paid', 'Pending', 1), -- Assigned to Eden
+('Enhance mobile responsiveness', 'Improve the responsiveness of the platform on mobile devices.', '2024-10-21 08:30:00', 3, 'Normal', 'InProgress', 2), -- Assigned to Alice
+('Set up continuous integration', 'Configure CI for automated builds and tests.', '2024-10-22 19:00:00', 4, 'Paid', 'Review', 3), -- Assigned to Bob
+('Perform stress testing', 'Conduct stress testing on the server to assess load handling.', '2024-10-23 09:15:00', 5, 'Normal', 'Testing', 5), -- Assigned to David
+('Refactor database schema', 'Make changes to the database schema to improve efficiency.', '2024-10-24 18:45:00', 4, 'Defect', 'InProgress', 4), -- Assigned to Charlie
+('Fix layout issues on homepage', 'Correct the layout problems found on the homepage.', '2024-10-25 16:30:00', 2, 'Normal', 'Pending', NULL);
 
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Fix payment bug', 'Resolve the defect in the payment module.', '2024-10-20 17:00:00', 5, 'Defect', 'InProgress', 1); -- Assigned to Eden
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Implement search functionality', 'Develop a search function for the user dashboard.', '2024-10-25 14:00:00', 4, 'Paid', 'Review', 2); -- Assigned to Alice
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Create project proposal', 'Prepare and submit the proposal for the new project.', '2024-10-18 09:00:00', 2, 'Normal', 'Testing', 3); -- Assigned to Bob
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Update user manual', 'Revise the user manual to reflect new updates.', '2024-10-22 16:00:00', 1, 'Normal', 'Pending', NULL);
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Optimize database queries', 'Improve the performance of database queries.', '2024-10-29 11:00:00', 4, 'Defect', 'Pending', NULL);
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Review code for security vulnerabilities', 'Conduct a security audit of the codebase.', '2024-11-02 12:00:00', 5, 'Paid', 'Pending', 4); -- Assigned to Charlie
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Test new login system', 'Ensure the new login system works across all platforms.', '2024-11-01 18:00:00', 3, 'Normal', 'Pending', 5); -- Assigned to David
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Integrate third-party API', 'Add support for the third-party API in the payment system.', '2024-10-28 10:00:00', 4, 'Paid', 'InProgress', 1); -- Assigned to Eden
-
-INSERT INTO Tasks (Title, Description, Deadline, Urgency, Type, Status, AssignedTo) 
-VALUES ('Create automated test scripts', 'Develop automated tests for the new feature.', '2024-10-23 14:30:00', 2, 'Normal', 'Review', 5); -- Assigned to David

@@ -1,0 +1,108 @@
+﻿<Window x:Class="WorkflowManager.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WorkflowManager.Demo" 
+        xmlns:local1="clr-namespace:WorkflowManager.Demo.Converters"
+        Title="Dynamic Grid Example" Height="600" Width="800">
+    <Window.DataContext>
+        <!-- 绑定ViewModel -->
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <!-- 在资源字典中定义转换器 -->
+        <local1:RowOffsetConverter x:Key="RowOffsetConverter"/>
+        <local1:ColumnOffsetConverter x:Key="ColumnOffsetConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <!-- 定义行和列 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 设置横轴表头 -->
+        <TextBlock Text="Employees" Grid.Row="0" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListView ItemsSource="{Binding Employees}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="10">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding Employees.Count}"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- 使用ListView绑定Employees集合 -->
+        <ListView ItemsSource="{Binding Employees}" Grid.Row="1" Grid.Column="1" >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid IsItemsHost="True" ShowGridLines="True">
+                        <!-- 根据需要定义行和列 -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <!-- 设置ItemContainerStyle来绑定Grid.Row和Grid.Column -->
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Grid.Column" Value="{Binding Id}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- 嵌套ListView绑定Tasks集合 -->
+                    <ListView ItemsSource="{Binding Tasks}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid IsItemsHost="True">
+                                    <!-- 根据需要定义行和列 -->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <!-- 设置ItemContainerStyle来绑定Grid.Row和Grid.Column -->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Grid.Row" Value="{Binding Id}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                <!-- 使用Border包裹Task的内容 -->
+                                <Border BorderBrush="Black" BorderThickness="1">
+                                    <TextBlock Text="{Binding Description}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

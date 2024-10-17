@@ -28,25 +28,39 @@
         <!-- 圆角边框 -->
         <Style TargetType="Border">
             <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="#DDDDDD"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Margin" Value="5"/>
+            <!--<Setter Property="Padding" Value="10"/>-->
+            <Setter Property="Margin" Value="3"/>
         </Style>
 
         <!-- TextBlock 样式 -->
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="#333333"/>
         </Style>
 
         <!-- 员工名称TextBlock加粗样式 -->
         <Style x:Key="EmployeeNameTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#444444"/>
-            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Margin" Value="10,10,0,10"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        
+        <!--员工状态TextBlock加粗样式，字号偏小-->
+        <Style x:Key="EmployeeStatusTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#444444"/>
+            <Setter Property="Margin" Value="10,10,0,10"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="Stretch" Value="Uniform"/>
+            <Setter Property="Margin" Value="300,5,0,5"/>
         </Style>
     </Application.Resources>
 </Application>
