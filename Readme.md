@@ -22,6 +22,12 @@
 
 ![当前效果](Document/v6.png)
 
+Demo视频：
+
+<video id="video" controls="" preload="none" poster="封面">
+      <source id="mp4" src="Document/demo.mp4" type="video/mp4">
+</videos>
+
 ## 设计技术
 
 - C#
