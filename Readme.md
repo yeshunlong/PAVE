@@ -24,9 +24,10 @@
 
 Demo视频：
 
-<video id="video" controls="" preload="none" poster="封面">
+<!-- <video id="video" controls="" preload="none" poster="封面">
       <source id="mp4" src="Document/demo.mp4" type="video/mp4">
-</videos>
+</videos> -->
+![Demo](Document/demo.gif)
 
 ## 设计技术
 
@@ -84,7 +85,7 @@ WorkflowManager （解决方案）
 
 - Mysql中数据库表的Type和Status字段默认存成了字符串类型，而C#中的枚举类型无法直接映射到字符串类型，需要自己写转换方法。
 - 几个项目之间的依赖关系需要注意，核心在于Data层可以直接依赖Core层，但是Core层不能直接依赖Data层，这会导致循环依赖，解决方法是采用依赖注入的方式，在UI层告诉Core层中的服务类用到的接口在Data层的具体实现是什么。
-- 窗口创建成功之后，出现不在我代码中的NullReference报错，原因是没有在App.xam	l中指定窗口的关闭方法ShutdownMode。
+- 窗口创建成功之后，出现不在我代码中的NullReference报错，原因是没有在App.xaml中指定窗口的关闭方法ShutdownMode。
 - 子控件绑定失败，原因是采用了Task.<属性名>，而实际采用<属性名>即可。
 - 优化界面时，试图在DataTemplate中直接设置Grid.Row和Column，但无法生效，需要[采用ItemContainerStyle解决](https://stackoverflow.com/questions/2432847/bind-grid-row-grid-column-inside-a-datatemplate)。
 - ListView中重叠的TaskCard需要交换顺序，通过重载滚轮事件，并且更新ItemSource实现。
